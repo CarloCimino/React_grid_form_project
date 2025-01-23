@@ -7,7 +7,7 @@
 
 ## React Client Application Routes
 
-- Route `/`: HomePage, if the user is authenticated, list all the available forms: pressing the button submit will redirect to the route ('/form/:formId'); if the user is an admin, he will be able to see the button for the creation of a new form, being redirected to ('/create'), and if the user is even the creator of a form he can view the response submitted for each user, being redirected to ('/form/:formId/response'). If the user is not authenticated, he will be redirected to the route ('/login').
+- Route `/`: HomePage, if the user is authenticated, list all the available forms: pressing the button submit will redirect to the route ('/form/:formId'); if the user is an admin, he will be able to see the button for the creation of a new form, being redirected to ('/create'), and if the user is the creator of a form he can view the response submitted for each user, being redirected to ('/form/:formId/response'). If the user is not authenticated, he will be redirected to the route ('/login').
 - Route `/form/:formId`: FormDetail, allow the user (admin and user) to submit a form, modifing the previous answer (if already submitted).
 - Route `/create`: FormCreate, allow the admin to create new form, choosing the name for the form and for each question, the grid headers and the minumum and maximum responses accepted for each question.
 - Route `/form/:formId/response `: ResponsePage, allow the admin and creator of the form to see the responses and details submitted by the users for each form.
@@ -183,39 +183,39 @@
 
 ## Database Tables
 
-- Table `users` - contains:
+- Table `users` - store all the data of the users, contains:
   - id: Integer (PRIMARY KEY, Autoincrement),
   - username: Text (Unique Not Null),
   - salt: Text,
   - password: Text (Not Null),
   - is_admin: Boolean (Not Null).
 
-- Table `forms` - contains:
+- Table `forms` - store all the basic data of the forms, contains:
   - id: Integer (PRIMARY KEY, Autoincrement),
   - title: Text (Not Null),
   - creator_id: Integer (Not Null, Foreign Key references to users(id)).
 
-- Table `questions` - contains:
+- Table `questions` - store the data of the questions related to the forms, contains:
   - id: Integer (PRIMARY KEY, Autoincrement),
   - form_id: Integer (Not Null, Foreign Key references to forms(id)),
   - title: Text (Not Null),
   - min_selection: Integer (Not Null),
   - max_selection: Integer (Not Null).
 
-- Table `grid_headers` - contains:
+- Table `grid_headers` - store the headers of the matrix related to the questions, contains:
   - id: Integer (PRIMARY KEY, Autoincrement),
   - question_id: Integer (Not Null, Foreign Key references to questions(id)),
   - form_id: Integer (Not Null, Foreign Key references to forms(id)),
   - typ: Text (Not Null) - ('row' or 'column'),
   - val: Text (Not Null).
 
-- Table `responses` - contains:
+- Table `responses` - store the basic data after the submission of the forms, contains:
   - id: Integer (PRIMARY KEY, Autoincrement),
   - form_id: Integer (Not Null, Foreign Key references to forms(id)),
   - user_id: Integer (Not Null, Foreign Key references to users(id)),
   - submitted_at: Datetime (Default CURRENT_TIMESTAMP).
 
-- Table `response_details` - contains:
+- Table `response_details` - store all the data of the user responses for the forms, contains:
   - id: Integer (PRIMARY KEY, Autoincrement),
   - response_id: Integer (Not Null, Foreign Key references to responses(id)),
   - question_id: Integer (Not Null, Foreign Key references to questions(id)),
