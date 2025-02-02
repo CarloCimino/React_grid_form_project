@@ -245,7 +245,6 @@
 ## Users Credentials
 
 - username | password | is_admin
------------|----------|-----------
 -  Bowser  |   pwd    |  1 (yes)
 -  Waluigi |   pwd    |  1 (yes)
 - Tartosso |   pwd    |  0 (no)
